@@ -53,8 +53,8 @@ app.post('/api/genres', (req, res) => {
 
     // Create a new genre object
     const genre = {
-        id = genres.length + 1,
-        name = req.body.name
+        id: genres.length() + 1,
+        name: req.body.name
     };
 
     // Add the genre object to the list of genres. 
