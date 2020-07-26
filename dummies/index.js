@@ -17,7 +17,7 @@ const courseSchema = new mongoose.Schema({
 })
 
 // get a Course class model using the collection name and schema
-const Course = mongoose.model('Course', courseSchema);
+const Course = mongoose.model('Course', courseSchema, collection='courses');
 
 // async function createCourse() {
 //     const course = new Course({
