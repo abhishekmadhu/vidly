@@ -4,8 +4,15 @@
 // I am just a student learning "stuff".
 
 const express = require('express');
-const Joi = require('joi');
+const mongoose = require('mongoose');
 const { request } = require('express');
+
+// This should come from a config file
+// URI/databaseName
+mongoose.connect('mongodb://localhost/mongo-exercises')
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB', err));
+
 
 // Import the homepage router
 const home = require('./routes/homePage');
@@ -24,19 +31,6 @@ app.use('/', home);
 
 // Use the router for /api/genres
 app.use('/api/genres', genres);
-
-// Validates the structure of the POST requests 
-genreValidator = (requestBody) => {
-    
-    // Create a schema for the genre object
-    let schema = Joi.object({
-        name: Joi.string().min(3).max(12).required(),
-        details: Joi.string().optional()
-    });
-
-    // Return a response based on the genre's validity
-    return schema.validate(requestBody);
-};
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
