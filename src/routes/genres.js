@@ -63,6 +63,8 @@ router.put('/:id', async (req, res) => {
     // If validation fails, return the error
     if (error) return res.status(400).send(error);
 
+    // Create a new object to hold the new details. 
+    // All options should ideally be optional
     let genreNewDetails = {
         name: req.body.name
     }
