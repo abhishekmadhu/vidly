@@ -1,29 +1,7 @@
+const { Customer, validate } = require('../models/customer')
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
-const Joi = require('joi');
 
-// Validates the structure of the POST requests 
-customerValidator = (requestBody) => {
-    
-    // Create a schema for the customer object
-    let schema = Joi.object({
-        name: Joi.string().max(255).required(),
-        phone: Joi.string().required().min(5).max(11),
-        isGold: Joi.boolean().required()
-    });
-
-    // Return a response based on the customer's validity
-    return schema.validate(requestBody);
-};
-
-const customerSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    phone: { type: String, required: true },
-    isGold: { type: String, required: true }
-})
-
-const Customer = mongoose.model('Customer', customerSchema);
 
 // ======== List all customers ========
 router.get('/', async (req, res) => {
@@ -34,7 +12,7 @@ router.get('/', async (req, res) => {
 // ======== Create a new customer ========
 router.post('/', async (req, res) => {
     // Validate
-    const { error } = customerValidator(req.body);
+    const { error } = validate(req.body);
     
     // If validation fails, return the error
     if (error) return res.status(400).send(error);
@@ -61,7 +39,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 
     // Validate the insertable data
-    const { error } = customerValidator(req.body);
+    const { error } = validate(req.body);
 
     // If validation fails, return the error
     if (error) return res.status(400).send(error);

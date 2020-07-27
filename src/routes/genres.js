@@ -1,27 +1,7 @@
+const { Genre, validator } = require('../models/genre');
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
-const Joi = require('joi');
 
-// Validates the structure of the POST requests 
-genreValidator = (requestBody) => {
-    
-    // Create a schema for the genre object
-    let schema = Joi.object({
-        name: Joi.string().min(3).max(12).required(),
-        details: Joi.string().optional()
-    });
-
-    // Return a response based on the genre's validity
-    return schema.validate(requestBody);
-};
-
-const genreSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    details: { type: String, required: false }
-})
-
-const Genre = mongoose.model('Genre', genreSchema);
 
 // ======== List all genres ========
 router.get('/', async (req, res) => {
@@ -32,7 +12,7 @@ router.get('/', async (req, res) => {
 // ======== Create a new genre ========
 router.post('/', async (req, res) => {
     // Validate
-    const { error } = genreValidator(req.body);
+    const { error } = validator(req.body);
     
     // If validation fails, return the error
     if (error) return res.status(400).send(error);
@@ -58,7 +38,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
 
     // Validate the insertable data
-    const { error } = genreValidator(req.body);
+    const { error } = validator(req.body);
 
     // If validation fails, return the error
     if (error) return res.status(400).send(error);
