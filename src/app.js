@@ -9,7 +9,7 @@ const { request } = require('express');
 
 // This should come from a config file
 // URI/databaseName
-mongoose.connect('mongodb://localhost/mongo-exercises')
+mongoose.connect('mongodb://localhost/vidly')
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB', err));
 
@@ -19,6 +19,9 @@ const home = require('./routes/homePage');
 
 // Import the genres router
 const genres = require('./routes/genres');
+
+// Import the customers router
+const customers = require('./routes/customers');
 
 // Create an express application 
 const app = express();
@@ -31,6 +34,7 @@ app.use('/', home);
 
 // Use the router for /api/genres
 app.use('/api/genres', genres);
+app.use('/api/customers', customers);
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
