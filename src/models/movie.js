@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
-const { genreSchema, validator } = require('./genre');
+const { genreSchema } = require('./genre');
 
 // Validates the structure of the POST requests 
 movieValidator = (requestBody) => {
