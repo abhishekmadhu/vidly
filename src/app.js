@@ -26,6 +26,9 @@ const customers = require('./routes/customers');
 // Import the movies router
 const movies = require('./routes/movies');
 
+// Import the rentals router
+const rentals = require('./routes/rentals');
+
 // Create an express application 
 const app = express();
 
@@ -39,6 +42,7 @@ app.use('/', home);
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
 app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
