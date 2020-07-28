@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     
     // If validation fails, return the error
     if (error) { return res.status(400).send(error); }
-
+    
     const customer = await Customer.findById(req.body.customerId);
     const movie = await Movie.findById(req.body.movieId);
     

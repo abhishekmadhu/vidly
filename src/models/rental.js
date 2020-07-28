@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+// Joi.objectId = require('joi-objectid')(Joi);     // Does not work as expected.
 
 // Validates the structure of the POST requests 
 rentalValidator = (requestBody) => {
