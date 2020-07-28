@@ -1,3 +1,4 @@
+const authMiddleware = require('../middlewares/auth');
 const { Genre, validator } = require('../models/genre');
 const express = require('express');
 const router = express.Router();
@@ -10,7 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 // ======== Create a new genre ========
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     // Validate
     const { error } = validator(req.body);
     

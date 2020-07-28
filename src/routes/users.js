@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const config = require('config');
 const express = require('express');
 const router = express.Router();
 const {User, validator} = require('../models/user');
@@ -42,9 +44,14 @@ router.post('/', async (req, res) => {
     // rentals.push(rental);
     await user.save();
 
+    // TODO: Take this private key from config. Change it while setting it up. 
+    const token = user.generateAuthToken()
     // Return a copy of the created object to the client 
     // as per specification. 
-    return res.status(200).send(_.pick(user, ['_id', 'name', 'email']));
+    return res
+        .header('x-auth-token', token)
+        .status(200)
+        .send(_.pick(user, ['_id', 'name', 'email']));
 
 });
 
