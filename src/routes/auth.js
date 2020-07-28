@@ -1,9 +1,11 @@
+const config = require('config');
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
 
 validateAuth = (requestBody) => {
     
@@ -46,9 +48,15 @@ router.post('/', async (req, res) => {
             .send('Invalid email or password');
     }
 
+    // TODO: Take this private key from config. Change it while setting it up. 
+    const token = jwt.sign(
+        { _id: user._id, name: user.name }, 
+        config.get('jwtPrivateKey') 
+    );
+
     // Return a copy of the created object to the client 
     // as per specification. 
-    return res.status(200).send(true);
+    return res.status(200).send(token);
 
 });
 

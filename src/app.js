@@ -2,10 +2,15 @@
 // a basic node application with express. 
 // All hail Mosh Hamedani, the tutor for this course. 
 // I am just a student learning "stuff".
-
+const config = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
 const { request } = require('express');
+
+if (!config.get('jwtPrivateKey')){
+    console.error('FATAL ERROR: vidly_jwtPrivateKey is not set in the environment!');
+    process.exit(-1);
+}
 
 // This should come from a config file
 // URI/databaseName
