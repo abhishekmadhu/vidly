@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {User, validator} = require('../models/user');
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
 
 // ======== List all rentals ========
 router.get('/', async (req, res) => {
@@ -33,11 +34,13 @@ router.post('/', async (req, res) => {
     });
 
     user = new User(_.pick(req.body, ['name', 'email', 'password']));
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
 
     // Add the rental object to the list of rentals. 
     // In real world we will save this to a DB. 
     // rentals.push(rental);
-    user = await user.save();
+    await user.save();
 
     // Return a copy of the created object to the client 
     // as per specification. 

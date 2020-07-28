@@ -32,6 +32,9 @@ const rentals = require('./routes/rentals');
 // Import the users router
 const users = require('./routes/users');
 
+// Import the auth router
+const auth = require('./routes/auth');
+
 // Create an express application 
 const app = express();
 
@@ -47,6 +50,7 @@ app.use('/api/customers', customers);
 app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
