@@ -1,16 +1,22 @@
+const winston = require('winston');
+const authMiddleware = require('../middlewares/auth');
 const { Genre, validator } = require('../models/genre');
 const express = require('express');
+const admin = require('../middlewares/admin');
 const router = express.Router();
 
 
 // ======== List all genres ========
-router.get('/', async (req, res) => {
-    const genres = await Genre.find().sort('name');
-    return res.status(200).send(genres);
+router.get('/', async (req, res, next) => {
+        winston.info('Getting the genres!');
+        // throw new Error('Could not get the genres!');
+        const genres = await Genre.find().sort('name');
+        return res.status(200).send(genres);
+
 });
 
 // ======== Create a new genre ========
-router.post('/', async (req, res) => {
+router.post('/', authMiddleware, async (req, res) => {
     // Validate
     const { error } = validator(req.body);
     
@@ -61,7 +67,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // ======== Delete a genre by ID ========
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authMiddleware, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
 
     // If object with said id does not exist, return an error
