@@ -1,4 +1,3 @@
-const { func } = require("joi");
 
 module.exports = function (req, res, next) {
     // req.user is set by auth middleware
