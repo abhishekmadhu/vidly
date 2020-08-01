@@ -1,3 +1,4 @@
+const winston = require('winston');
 const authMiddleware = require('../middlewares/auth');
 const { Genre, validator } = require('../models/genre');
 const express = require('express');
@@ -7,17 +8,11 @@ const router = express.Router();
 
 // ======== List all genres ========
 router.get('/', async (req, res, next) => {
-    try {
+        winston.info('Getting the genres!');
+        // throw new Error('Could not get the genres!');
         const genres = await Genre.find().sort('name');
         return res.status(200).send(genres);
-    }
 
-    catch (ex) {
-        // Log this issue for future 
-        next(exception); 
-        // passing the control to the next middleware function, 
-        // which is the error handler.
-    }
 });
 
 // ======== Create a new genre ========
