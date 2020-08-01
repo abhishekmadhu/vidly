@@ -1,13 +1,23 @@
 const authMiddleware = require('../middlewares/auth');
 const { Genre, validator } = require('../models/genre');
 const express = require('express');
+const admin = require('../middlewares/admin');
 const router = express.Router();
 
 
 // ======== List all genres ========
-router.get('/', async (req, res) => {
-    const genres = await Genre.find().sort('name');
-    return res.status(200).send(genres);
+router.get('/', async (req, res, next) => {
+    try {
+        const genres = await Genre.find().sort('name');
+        return res.status(200).send(genres);
+    }
+
+    catch (ex) {
+        // Log this issue for future 
+        next(exception); 
+        // passing the control to the next middleware function, 
+        // which is the error handler.
+    }
 });
 
 // ======== Create a new genre ========
@@ -62,7 +72,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // ======== Delete a genre by ID ========
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [authMiddleware, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
 
     // If object with said id does not exist, return an error

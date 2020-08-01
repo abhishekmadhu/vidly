@@ -2,6 +2,7 @@
 // a basic node application with express. 
 // All hail Mosh Hamedani, the tutor for this course. 
 // I am just a student learning "stuff".
+const error = require('./middlewares/error');
 const config = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -39,6 +40,7 @@ const users = require('./routes/users');
 
 // Import the auth router
 const auth = require('./routes/auth');
+const { func } = require('joi');
 
 // Create an express application 
 const app = express();
@@ -56,6 +58,9 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+
+// Register the error middleware after all other middlewares
+app.use(error);
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 

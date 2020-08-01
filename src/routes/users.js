@@ -1,3 +1,4 @@
+const auth = require('../middlewares/auth');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const express = require('express');
@@ -6,11 +7,17 @@ const {User, validator} = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
-// ======== List all rentals ========
+// ======== List all users ========
 router.get('/', async (req, res) => {
-    const users = await User.find();
+    const users = await User.find().select('-password');
     return res.status(200).send(users);
 });
+
+// ======== Get current logged-in user details ========
+router.get('/me', auth, async(req, res) => {
+    const user = await User.findById(req.user._id).select('-password');
+    res.status(200).send(user);
+})
 
 // ======== Create a new user ========
 router.post('/', async (req, res) => {
