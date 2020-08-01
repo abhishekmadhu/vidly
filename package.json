@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --verbose --runInBand --detectOpenHandles"
+    "test": "jest --verbose --runInBand --detectOpenHandles",
+    "start": "node src\\app.js"
+  },
+  "engines": {
+    "node": "12.18.3"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "compression": "^1.7.4",
     "config": "^3.3.1",
     "express": "^4.17.1",
+    "helmet": "^3.23.3",
     "joi": "^17.1.1",
     "joi-objectid": "^2.0.0",
     "jsonwebtoken": "^8.5.1",

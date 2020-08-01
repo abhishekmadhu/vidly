@@ -12,6 +12,7 @@ require('./startup/logging')();
 require('./startup/routes')(app);
 require('./startup/database')();
 require('./startup/configuration')();
+require('./startup/prod')(app);
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
