@@ -11,12 +11,13 @@ module.exports = function () {
 
     // Catch all unhandled Promise rejections
     process.on('unhandledRejection', (ex) => {
-        console.log('WE GOT AN Unhandles rejection');
+        console.log('WE GOT AN Unhandled Promise rejection');
         winston.error(ex.message, ex);
         process.exit(-2);
     })
 
     winston.add(winston.transports.File, { filename: 'logfile.log' });
-    // winston.add(winston.transports.MongoDB, { db: 'mongodb://localhost/vidly' });
 
+    // Needs a plugin. keep lite when not required
+    // winston.add(winston.transports.MongoDB, { db: 'mongodb://localhost/vidly' });        
 }
