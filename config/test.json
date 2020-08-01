@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey": "this is a test secret key, and should not be same as in prod",
+    "db": "mongodb://localhost/vidly_tests"
+}
