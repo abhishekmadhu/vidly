@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --verbose --runInBand --detectOpenHandles",
-    "start": "node src\\app.js"
+    "start": "node src/app.js"
   },
   "engines": {
     "node": "12.18.3"
