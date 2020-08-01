@@ -6,10 +6,12 @@ module.exports = function () {
     // This should come from a config file
     // URI/databaseName
     const db = config.get('db');
-    console.log("========================>" + db + "<========================");
+
+    // Remove for security reasons, the password gets logged in the startup logs this way.
+    // console.log("========================>" + db + "<========================");
     mongoose.connect(db)
-        .then(() => winston.info(`Connected to MongoDB ${db}...`))
-        .catch(err => {winston.error(`Could not connect to MongoDB ${db}`, err);});
+        .then(() => winston.info(`Connected to MongoDB...`))
+        .catch(err => {winston.error(`Could not connect to MongoDB`, err);});
 
 
 }
