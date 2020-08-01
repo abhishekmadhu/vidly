@@ -1,0 +1,30 @@
+
+const request = require('supertest');
+const { Genre } = require('../../src/models/genre');
+const mongoose = require('mongoose');
+
+let server;
+
+describe('/api/genres', () => {
+    beforeEach(() => { server = require('../../src/app'); })
+    afterEach(async () => { 
+        await Genre.remove({});
+        await mongoose.disconnect();
+        server.close(); 
+    })
+
+    describe('GET /', () => {
+        it('should return all genres', async () => {
+
+            await Genre.collection.insertMany([
+                { name: 'genre1' },
+                { name: 'genre2' },
+            ]);
+
+            const res = await request(server).get('/api/genres');
+            expect(res.status).toBe(200);
+            expect(res.body.length).toBe(2);
+
+        })
+    });
+});

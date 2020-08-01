@@ -8,7 +8,7 @@ const express = require('express');
 // Create an express application 
 const app = express();
 
-require('./startup/logging');
+require('./startup/logging')();
 require('./startup/routes')(app);
 require('./startup/database')();
 require('./startup/configuration')();
@@ -16,4 +16,6 @@ require('./startup/configuration')();
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
 const port = process.env.PORT || 3000;
-app.listen(port, () => winston.info(`Listening on port ${port}...`));
+const server = app.listen(port, () => winston.info(`Listening on port ${port}...`));
+
+module.exports = server;
