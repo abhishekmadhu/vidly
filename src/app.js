@@ -8,13 +8,13 @@ const cors = require('cors');
 
 // Create an express application 
 const app = express();
-app.use(cors());
 
 require('./startup/logging')();
 require('./startup/routes')(app);
 require('./startup/database')();
 require('./startup/configuration')();
 require('./startup/prod')(app);
+app.use(cors());
 
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
