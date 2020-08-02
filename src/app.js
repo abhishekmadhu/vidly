@@ -4,9 +4,11 @@
 // I am just a student learning "stuff".
 const winston = require('winston');
 const express = require('express');
+const cors = require('cors');
 
 // Create an express application 
 const app = express();
+app.use(cors());
 
 require('./startup/logging')();
 require('./startup/routes')(app);
@@ -17,6 +19,6 @@ require('./startup/prod')(app);
 // Get the post information from the environment variable 'PORT'. 
 // If it does not exist, use 3000 as default. 
 const port = process.env.PORT || 3000;
-const server = app.listen(port, () => winston.info(`Listening on port ${port}...`));
+const server = app.listen(port, () => winston.info(`CORS-enabled server listening on port ${port}...`));
 
 module.exports = server;
