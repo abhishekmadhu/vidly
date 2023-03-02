@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const express = require('express');
 const router = express.Router();
-const {User, validator} = require('../models/user');
+const { User, validator } = require('../models/user');
 const _ = require('lodash');
 const bcrypt = require('bcrypt');
 
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 });
 
 // ======== Get current logged-in user details ========
-router.get('/me', auth, async(req, res) => {
+router.get('/me', auth, async (req, res) => {
     const user = await User.findById(req.user._id).select('-password');
     res.status(200).send(user);
 })
@@ -23,7 +23,7 @@ router.get('/me', auth, async(req, res) => {
 router.post('/', async (req, res) => {
     // Validate
     const { error } = validator(req.body);
-    
+
     // If validation fails, return the error
     if (error) { return res.status(400).send(error); }
 
@@ -34,13 +34,13 @@ router.post('/', async (req, res) => {
             .status(400)
             .send('This email is already associated with another user');
     }
-    
+
     // Create a new rental object
-    user = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-    });
+    // user = new User({
+    //     name: req.body.name,
+    //     email: req.body.email,
+    //     password: req.body.password,
+    // });
 
     user = new User(_.pick(req.body, ['name', 'email', 'password']));
     const salt = await bcrypt.genSalt(10);
